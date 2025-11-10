@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayCanvas Editor - Standalone</title>
+
+    <!-- Editor Styles -->
+    <link rel="stylesheet" href="dist/css/editor.css">
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+            font-family: 'Helvetica Neue', Arial, Helvetica, sans-serif;
+        }
+
+        #application-canvas {
+            width: 100%;
+            height: 100%;
+        }
+
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #20292b;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10000;
+            color: #f60;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading-screen" class="loading-screen">
+        <div>Loading PlayCanvas Editor...</div>
+    </div>
+
+    <!-- Global Configuration -->
+    <script>
+        // Create a minimal config object for standalone mode
+        window.config = {
+            // Project configuration
+            project: {
+                id: 1,
+                name: 'Standalone Project',
+                settings: {
+                    physics: {
+                        gravity: [0, -9.8, 0]
+                    },
+                    rendering: {
+                        fog: 'none',
+                        fog_color: [0, 0, 0],
+                        fog_start: 1,
+                        fog_end: 1000,
+                        fog_density: 0,
+                        gamma_correction: true,
+                        tonemapping: 0,
+                        skybox: null,
+                        skyboxIntensity: 1,
+                        skyboxMip: 0,
+                        lightmapSizeMultiplier: 1,
+                        lightmapMaxResolution: 2048,
+                        lightmapMode: 0,
+                        ambientBake: false,
+                        ambientBakeNumSamples: 1,
+                        ambientBakeSpherePart: 0.4,
+                        ambientBakeOcclusionBrightness: 0
+                    },
+                    audio: {
+                        useAudioContext: true
+                    },
+                    use_legacy_scripts: false,
+                    scripts: [],
+                    priority_scripts: [],
+                    libraries: [],
+                    use_device_pixel_ratio: false,
+                    antialiasing: true,
+                    preserve_drawing_buffer: false,
+                    transparent_canvas: false,
+                    fill_mode: 'FILLMODE_FILL_WINDOW',
+                    resolution_mode: 'AUTO',
+                    width: 1280,
+                    height: 720,
+                    use_keyboard: true,
+                    use_mouse: true,
+                    use_gamepad: true,
+                    use_touch: true,
+                    engineV2: true
+                },
+                owner: 1,
+                private: false
+            },
+
+            // User configuration
+            self: {
+                id: 1,
+                username: 'standalone_user',
+                fullName: 'Standalone User',
+                email: 'user@localhost',
+                branch: {
+                    id: 'main',
+                    name: 'main',
+                    latestCheckpointId: null,
+                    closedAt: null,
+                    closedBy: null,
+                    merge: null
+                },
+                admin: true
+            },
+
+            // Scene configuration
+            scene: {
+                id: 1,
+                uniqueId: 'scene-1',
+                name: 'Untitled'
+            },
+
+            // Schema configuration
+            schema: {
+                scene: {},
+                assets: {},
+                settings: {}
+            },
+
+            // API URLs (mock for standalone)
+            url: {
+                home: '',
+                api: '',
+                apiAssets: ''
+            },
+
+            // Access token (empty for standalone)
+            accessToken: '',
+
+            // Empty tabs for code editor
+            tabs: [],
+
+            // Empty file
+            file: null,
+
+            // Permissions (full permissions in standalone)
+            permissions: {
+                read: true,
+                write: true,
+                admin: true
+            },
+
+            // Feature flags
+            features: {},
+
+            // Realtime disabled for standalone
+            realtime: {
+                enabled: false
+            }
+        };
+
+        // Mock API endpoints to prevent network requests
+        window.mockApiEnabled = true;
+
+        // Simple console info
+        console.log('%c PlayCanvas Editor - Standalone Mode ', 'background: #f60; color: white; font-size: 16px; padding: 4px;');
+        console.log('Running in standalone mode - no backend connection required');
+    </script>
+
+    <!-- Load PlayCanvas Engine (from CDN for now) -->
+    <script src="https://code.playcanvas.com/playcanvas-stable.min.js"></script>
+
+    <!-- Load Editor JavaScript -->
+    <script src="dist/js/editor.js"></script>
+
+    <script>
+        // Wait for DOM to be ready
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hide loading screen after a short delay
+            setTimeout(function() {
+                const loadingScreen = document.getElementById('loading-screen');
+                if (loadingScreen) {
+                    loadingScreen.style.opacity = '0';
+                    loadingScreen.style.transition = 'opacity 0.5s';
+                    setTimeout(function() {
+                        loadingScreen.style.display = 'none';
+                    }, 500);
+                }
+            }, 2000);
+        });
+
+        // Override realtime connection to prevent errors
+        if (typeof editor !== 'undefined') {
+            editor.once('load', function() {
+                console.log('Editor loaded in standalone mode');
+
+                // Create a minimal scene if none exists
+                if (!editor.call || typeof editor.call !== 'function') {
+                    console.warn('Editor API not fully initialized');
+                }
+            });
+        }
+    </script>
+</body>
+</html>
