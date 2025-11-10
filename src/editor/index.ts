@@ -419,6 +419,23 @@ import './viewport/viewport-focus.ts';
 import './viewport/viewport-outline.ts';
 import './viewport/viewport-i18n.ts';
 
+// === SAFETY TOOLS - PHASE 1 ===
+// Enhanced 3D picking with intersection points
+import './viewport/viewport-pick-3d.ts';
+
+// Proxy mesh generator for gsplats
+import './tools/proxy-mesh-generator.ts';
+
+// Measurement tools (distance, angle, height)
+import './viewport/tools/measurement-tool.ts';
+
+// Surface alignment gizmo
+import './viewport/gizmo/gizmo-surface-align.ts';
+
+// Safety tools toolbar
+import './toolbar/toolbar-safety-tools.ts';
+// === END SAFETY TOOLS ===
+
 // previews
 import './assets/assets-preview-material-watch.ts';
 import './assets/assets-preview-model-watch.ts';
